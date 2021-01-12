@@ -16,6 +16,21 @@ TP - Programmation fonctionnelle
 
 ---
 
+# Environnement de développement
+
+```
+$ git clone https://github.com/fabienbarbaud/docker-python.git
+$ cd docker-python
+$ docker-compose run --rm python --version
+```
+
+```
+Creating docker-python_python_run ... done
+Python 3.9.1
+```
+
+---
+
 # Exercice 1
 
 Convertir en programmation fonctionnelle - *reduce*
@@ -154,4 +169,52 @@ def convertion(chiffre):
 
 vraiChiffres = map(convertion, chiffres)
 functools.reduce(lambda x,y:x+y, vraiChiffres)
+```
+
+---
+
+# Exercice 6
+
+Trouver le nombre de fois que la lettre `e` est présente dans cette phrase :
+
+```python
+phrase = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.'
+```
+
+---
+
+# Réponse
+
+```python
+import functools
+phrase = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.'
+
+
+def compteParLettre(lettre):
+    return (lettre, 1)
+
+
+def filtreLesE(compteParLettre):
+    lettre, compte = compteParLettre
+    return lettre == "e"
+
+
+def nombreDeLettres(nombreTotal, compteParLettre):
+    lettre, compte = compteParLettre
+    lettreTotal, compteTotal = nombreTotal
+    return (lettreTotal, compteTotal + compte)
+
+
+print(
+    functools.reduce(
+        nombreDeLettres,
+        filter(
+            filtreLesE,
+            map(
+                compteParLettre,
+                list(phrase)
+            )
+        )
+    )
+)
 ```
